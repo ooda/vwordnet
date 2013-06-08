@@ -1,0 +1,59 @@
+@import "base.css";
+
+
+@background: #b8b8b8;
+@parentNode: #2a457e;
+@leafNode: #929292;
+@link: #929292;;
+@text: #050b16;
+
+
+body {
+    background-color: @background;
+}
+
+#define {
+    margin-top: 40px;
+    margin-left: 40px;
+}
+
+
+.node circle {
+    cursor: pointer;
+    fill: @leafNode;
+    stroke: @leafNode;
+    stroke-width: 1.5px;
+}
+
+
+.node text {
+    fill: @text;
+    font: 12px sans-serif;
+}
+
+.link {
+    fill: none;
+    stroke: @link;
+    stroke-width: 1px;
+}
+
+circle.js-parent {
+    fill: @parentNode;
+    stroke: @parentNode;
+}
+
+.rootsynset {
+    font-size: 24px;
+}
+
+.synset {
+    font-size: 18px;
+    margin: 10px 0px 20px 20px;
+}
+
+.synset-id {
+    font-style: italic;
+}
+
+.js-graph {
+}

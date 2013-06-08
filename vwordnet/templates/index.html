@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block headscripts %}
+<!-- Call this block from 'base' -->
+{{super()}}
+
+<!-- The only Javascript inclusion -->
+<script data-main="static/js/main" src="/static/js/other/require.js"></script>
+{% endblock headscripts %}
+
+{% block content %}
+<div class="container-fluid">
+  <div id="define" class="row-fluid">
+    <form data-bind="submit: define">
+      <input type="text" data-bind="value: word"></input>
+    </form>
+  </div>
+
+  <div id="container" class="row-fluid" data-bind="foreach: definitions">
+    <div class="js-definition row-fluid">
+      <span class="rootsynset" data-bind="text: rootsynset"></span>
+      
+      <div class="row-fluid" data-bind="foreach: synsets">
+        <div class="synset">
+          <span class="synset-id" data-bind="text: id"></span>:
+          <span class="synset-def" data-bind="text: definition"></span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+{% endblock content %}
+

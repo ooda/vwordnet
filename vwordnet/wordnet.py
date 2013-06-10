@@ -1,5 +1,5 @@
 import os
-from os.path import join, dirname, abspath
+from os.path import join, dirname, abspath, exists
 from collections import defaultdict
 
 import networkx as nx
@@ -122,3 +122,23 @@ def lemma_attr(lemma):
         'id': lemma.name,
         'count': lemma.count(),
     }
+
+
+# The data we need to download from NLTK to use this module. Add or remove
+# appropriately in the following map. The key is the directory under which NLTK
+# puts its corresponding data.
+nltk_data = {
+    'corpora': ['wordnet'],
+}
+
+
+def _download_nltk_data():
+    """Install corpus data.
+    """
+    for directory, data in nltk_data.iteritems():
+        for datum in data:
+            if not exists(join(NLTK_DATA_DIR, directory, datum)):
+                nltk.download(datum, download_dir=NLTK_DATA_DIR)
+
+
+_download_nltk_data()

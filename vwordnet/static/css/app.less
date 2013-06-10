@@ -1,12 +1,12 @@
 @import "base.css";
 
 
-@background: #b8b8b8;
-@parentNode: #2a457e;
-@leafNode: #929292;
-@link: #929292;;
-@text: #050b16;
-
+@background: rgb(233, 233, 233);
+@leafNode: #a5a5a5;
+@link: #a5a5a5;;
+@text: rgb(19, 0, 3);
+@defNode: rgb(231, 107, 123);
+@defPath: rgb(255, 0, 33);
 
 body {
     background-color: @background;
@@ -18,15 +18,21 @@ body {
 }
 
 
-.node circle {
+.js-node circle {
     cursor: pointer;
     fill: @leafNode;
     stroke: @leafNode;
     stroke-width: 1.5px;
 }
 
+.js-path circle {
+    cursor: pointer;
+    fill: @defNode;
+    stroke: @defNode;
+    stroke-width: 1.5px;
+}
 
-.node text {
+.js-node text {
     fill: @text;
     font: 12px sans-serif;
 }
@@ -37,9 +43,15 @@ body {
     stroke-width: 1px;
 }
 
+.link.js-path {
+    fill: none;
+    stroke: @defPath;
+    stroke-width: 1px;
+}
+
 circle.js-parent {
-    fill: @parentNode;
-    stroke: @parentNode;
+    fill: @background;
+    stroke: @defNode;
 }
 
 .rootsynset {

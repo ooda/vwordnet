@@ -68,13 +68,17 @@ function  ($, _, viewmodel, d3, ko) {
       nodes.forEach(function (d) { d.y = d.depth * 180; });
 
         // Update the nodes…
-      var node = vis.selectAll("g.node")
+      var node = vis.selectAll("g.js-node")
         .data(nodes, function (d) { return d.id || (d.id = ++index); });
 
         // Enter any new nodes at the parent's previous position.
       var nodeEnter = node.enter().append("svg:g")
-        .attr("class", "node")
-        .attr("transform", function (d) { return "translate(" + source.y0 + "," + source.x0 + ")"; })
+        .attr("class", function (d) {
+          return "js-node " + (d.path ? "js-path": '');
+        })
+        .attr("transform", function (d) {
+          return "translate(" + source.y0 + "," + source.x0 + ")";
+        })
         .on("click", function (d) { toggle(d); update(d); });
 
       nodeEnter.append("svg:circle")
@@ -118,7 +122,9 @@ function  ($, _, viewmodel, d3, ko) {
 
         // Enter any new links at the parent's previous position.
       link.enter().insert("svg:path", "g")
-        .attr("class", "link")
+        .attr("class", function (d) {
+          return "link " + (d.target.path ? "js-path" : "");
+        })
         .attr("d", function (d) {
           var o = {x: source.x0, y: source.y0};
           return diagonal({source: o, target: o});

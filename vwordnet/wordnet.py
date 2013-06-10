@@ -69,19 +69,19 @@ def merge_definitions(definitions):
 
 def merge(def1, def2):
     """Merge def2 into def1. After that, you may drop def2."""
-    # TODO: only trees are merged right now. Other attributes should follow.
     graph1 = def1['graph']
     graph2 = def2['graph']
 
+    # Add graph2 nodes and edges to graph1
     for node, data in graph1.nodes_iter(data=True):
-        # Add edges
+        # Add graph2 edges
         for edge1, edge2 in graph2.edges_iter():
             graph1.add_edge(edge1, edge2)
-        # Add nodes
+        # Add graph2 nodes
         for node2, data2 in graph2.nodes_iter(data=True):
             graph1.add_node(node2, **data2)
 
-    # Merge definition strings
+    # Combine definition attributes
     def1['synsets'].extend(def2['synsets'])
 
 
@@ -102,7 +102,7 @@ def hierarchy(path):
     """Build a synset hierarchy from the given path."""
     graph = nx.DiGraph(root=path[0].name)
     for synset in path:
-        graph.add_node(synset.name, **synset_data(synset))
+        graph.add_node(synset.name, path=True, **synset_data(synset))
         for hyponym in synset.hyponyms():
             graph.add_node(hyponym.name, **synset_data(hyponym))
             graph.add_edge(synset.name, hyponym.name)

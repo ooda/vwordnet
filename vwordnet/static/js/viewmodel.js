@@ -4,7 +4,7 @@
 define(["knockout"],
 function (ko) {
   var exports = {
-    word: ko.observable('funny'),
+    word: ko.observable(''),
     definitions: ko.observableArray()
   };
   return exports;

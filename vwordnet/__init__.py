@@ -14,13 +14,12 @@ __license__ = "MIT"
 import os
 import traceback
 
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify
 from werkzeug.exceptions import default_exceptions
 from werkzeug.exceptions import HTTPException
 
 from cloudly import logger
 from cloudly.notify import notify as cloudly_notify
-from vwordnet.metric import evt
 
 FORMAT = "%(asctime)s] %(levelname)s %(module)s %(funcName)s: %(message)s"
 
@@ -51,7 +50,6 @@ def make_json_error(ex):
     if code in [500]:
         notify(ex, code)
 
-    evt("error", {'code': code}, request=request)
     return response
 
 for code in default_exceptions.iterkeys():

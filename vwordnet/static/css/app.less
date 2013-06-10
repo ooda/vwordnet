@@ -7,6 +7,8 @@
 @text: rgb(19, 0, 3);
 @defNode: rgb(11, 92, 238);
 @defPath: rgb(0, 91, 255);
+@alert: #ffb42c;
+
 
 body {
     background-color: @background;
@@ -16,7 +18,7 @@ body {
   position: fixed;
   top: 30px;
   width: 100%;
-  z-index: 100;
+  z-index: -1;
 }
 
 #jsAlert {
@@ -27,13 +29,13 @@ body {
 .alert h4 {
   font-weight: normal;
   text-transform: uppercase;
-  color: white;
+  color: @text;
 }
 
 .alert {
   text-shadow: none;
-  color: white;
-  background-color: @defNode;
+  color: @text;
+  background-color: @alert;
   border: none;
 }
 
@@ -92,5 +94,10 @@ circle.js-parent {
     font-style: italic;
 }
 
-.js-graph {
+.synset-id:after {
+    content: ':';
+}
+
+#spinner {
+    margin-bottom: 10px;
 }

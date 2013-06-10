@@ -14,6 +14,7 @@
     <form data-bind="submit: define">
       <input placeholder="English dictionary work" 
         type="text" data-bind="value: word"></input>
+      <img id="spinner" class="hide" src=/static/img/spinner.gif></img>
     </form>
   </div>
 
@@ -23,7 +24,7 @@
       
       <div class="row-fluid" data-bind="foreach: synsets">
         <div class="synset">
-          <span class="synset-id" data-bind="text: id"></span>:
+          <span class="synset-id" data-bind="text: id"></span>
           <span class="synset-def" data-bind="text: definition"></span>
         </div>
       </div>

@@ -35,6 +35,9 @@ function ($, _, ko, d3, viewmodel, tree, infomsg) {
       return;
     }
 
+    infomsg.clear();
+    $("#spinner").show();
+
     return $.ajax({
       url: "define/" + word,
       type: "GET",
@@ -59,6 +62,8 @@ function ($, _, ko, d3, viewmodel, tree, infomsg) {
             " Our team has been contacted and we are working to solve " +
             "this issue. (" + data.message + ")";
       infomsg.error(textStatus, message, 0);
+    }).always(function () {
+      $("#spinner").hide();
     });
   };
 

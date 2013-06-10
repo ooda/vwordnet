@@ -22,6 +22,14 @@
   </head>
 	
   <body id="body">
+    <div id="alertContainer">
+      <div id="jsAlert" class="hide alert alert-block" 
+        data-bind="css: {hide: alertHeading() === ''}">
+        <a class="close" data-dismiss="alert" href="#">×</a>
+        <h4 class="alert-heading" data-bind="text: alertHeading"></h4>
+        <p data-bind="html: alertMsg"></p>
+      </div>
+    </div>
     {% block content %} {% endblock content %}
     {% block endscripts %} {% endblock endscripts %}
 

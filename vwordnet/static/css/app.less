@@ -1,15 +1,40 @@
 @import "base.css";
 
 
-@background: rgb(233, 233, 233);
+@background: #e9e9e9;
 @leafNode: #a5a5a5;
 @link: #a5a5a5;;
 @text: rgb(19, 0, 3);
-@defNode: rgb(231, 107, 123);
-@defPath: rgb(255, 0, 33);
+@defNode: rgb(11, 92, 238);
+@defPath: rgb(0, 91, 255);
 
 body {
     background-color: @background;
+}
+
+#alertContainer {
+  position: fixed;
+  top: 30px;
+  width: 100%;
+  z-index: 100;
+}
+
+#jsAlert {
+  width: 375px;
+  margin: auto;
+}
+
+.alert h4 {
+  font-weight: normal;
+  text-transform: uppercase;
+  color: white;
+}
+
+.alert {
+  text-shadow: none;
+  color: white;
+  background-color: @defNode;
+  border: none;
 }
 
 #define {

@@ -8,9 +8,10 @@ define([
   "knockout",
   "d3",
   "viewmodel",
-  "tree"
+  "tree",
+  "infomsg"
 ],
-function ($, _, ko, d3, viewmodel, tree) {
+function ($, _, ko, d3, viewmodel, tree, infomsg) {
   var exports = {}, define, addGraph;
 
   exports.initialize = function () {
@@ -30,17 +31,34 @@ function ($, _, ko, d3, viewmodel, tree) {
     // Erase previous entries
     viewmodel.definitions([]);
 
+    if (word === "") {
+      return;
+    }
+
     return $.ajax({
       url: "define/" + word,
       type: "GET",
       dataType: "json"
     }).done(function  (data) {
-      // Add nodes to the DOM through Knockout
-      ko.utils.arrayPushAll(viewmodel.definitions, data.definitions);
-      // Go through the added nodes and build graphs.
-      $(".js-definition").each(function (index, element) {
-        addGraph(element, data.definitions[index]);
-      });
+      if (data.definitions.length === 0) {
+        infomsg.info("No definition found", "Sorry, we couldn't produce" +
+        " a definition for this word. <br>Try again.");
+      }
+      else {
+        // Add nodes to the DOM through Knockout
+        ko.utils.arrayPushAll(viewmodel.definitions, data.definitions);
+          // Go through the added nodes and build graphs.
+        $(".js-definition").each(function (index, element) {
+          addGraph(element, data.definitions[index]);
+        });
+      }
+    }).fail(function (jqXHR, textStatus, errorThrown) {
+      console.log("Failed", jqXHR, textStatus, errorThrown);
+      var data = JSON.parse(jqXHR.responseText),
+        message = "We're sorry, but an error has occured." +
+            " Our team has been contacted and we are working to solve " +
+            "this issue. (" + data.message + ")";
+      infomsg.error(textStatus, message, 0);
     });
   };
 

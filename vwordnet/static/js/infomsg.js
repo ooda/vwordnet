@@ -1,7 +1,11 @@
 /*global */
-define(["jquery", "viewmodel", "bootstrap"],
-function ($, viewmodel, bootstrap) {
+define(["jquery", "viewmodel", "bootstrap", "knockout"],
+function ($, viewmodel, bootstrap, ko) {
   var exports = {}, setTimer, timerId;
+
+  // Extend the viewmodel
+  viewmodel.alertHeading = ko.observable('');
+  viewmodel.alertMsg = ko.observable();
 
   // Handler for async calls. The response text from the server needs to be
   // application/json.

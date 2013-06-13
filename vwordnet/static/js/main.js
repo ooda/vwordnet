@@ -3,7 +3,7 @@
 */
 require({
   paths: {
-    "jquery": "other/jquery-1.9.1.min",
+    "jquery": "other/jquery-2.1.0.min",
     "knockout": "other/knockout-2.2.1",
     "underscore": "other/underscore-min",
     "domReady": "other/domReady",

@@ -9,7 +9,8 @@ define([
   "d3",
   "viewmodel",
   "tree",
-  "infomsg"
+  "infomsg",
+  "bootstrap"
 ],
 function ($, _, ko, d3, viewmodel, tree, infomsg) {
   var exports = {}, define, addGraph;
@@ -36,7 +37,7 @@ function ($, _, ko, d3, viewmodel, tree, infomsg) {
     }
 
     infomsg.clear();
-    $("#spinner").show();
+    $("#spinner").removeClass("hidden");
 
     return $.ajax({
       url: "define/" + word,
@@ -48,12 +49,19 @@ function ($, _, ko, d3, viewmodel, tree, infomsg) {
         " a definition for this word. <br>Try again.");
       }
       else {
+        // Because Bootstrap selects element with jQuery and selectors must
+        // escape dots, we need to remove those dots from the ids.
+        data.definitions.forEach(function (def) {
+          def.id = def.rootsynset.replace(/\./g, "");
+        });
+
         // Add nodes to the DOM through Knockout
         ko.utils.arrayPushAll(viewmodel.definitions, data.definitions);
-          // Go through the added nodes and build graphs.
+        // Go through the added nodes and build graphs.
         $(".js-definition").each(function (index, element) {
           addGraph(element, data.definitions[index]);
         });
+        $('.nav a:first').tab('show');
       }
     }).fail(function (jqXHR, textStatus, errorThrown) {
       console.log("Failed", jqXHR, textStatus, errorThrown);
@@ -63,7 +71,7 @@ function ($, _, ko, d3, viewmodel, tree, infomsg) {
             "this issue. (" + data.message + ")";
       infomsg.error(textStatus, message, 0);
     }).always(function () {
-      $("#spinner").hide();
+      $("#spinner").addClass("hidden");
     });
   };
 

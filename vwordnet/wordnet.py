@@ -3,7 +3,6 @@ from os.path import join, dirname, abspath, exists
 from collections import defaultdict
 
 import networkx as nx
-from networkx.readwrite import json_graph
 import nltk
 from nltk.corpus import wordnet as wn
 
@@ -23,6 +22,20 @@ def define(word):
     """Return a list of definitions for the given word.
     A definition is a group of WordNet synsets having the same root hypernym.
     """
+    definitions = get_definitions(word)
+    merged = []
+    # Jsonify each graph
+    for defn in merge_synsets(definitions):
+        try:
+            defn['graph'] = tree_data(defn['graph'],
+                                      defn['graph'].graph['root'])
+            merged.append(defn)
+        except TypeError as exception:
+            log.error(exception)
+    return merged
+
+
+def get_definitions(word):
     definitions = []
     for synset in wn.synsets(word):
         graph = get_hypernym_graph(synset)
@@ -37,27 +50,17 @@ def define(word):
             'word': word,
         }
         definitions.append(definition)
-
-    merged = []
-    # Jsonify each graph
-    for defn in merge_definitions(definitions):
-        try:
-            defn['graph'] = json_graph.tree_data(defn['graph'],
-                                                 defn['graph'].graph['root'])
-            merged.append(defn)
-        except TypeError as exception:
-            log.error(exception)
-    return merged
+    return definitions
 
 
-def merge_definitions(definitions):
-    """Merge all definitions having the same root synset."""
+def merge_synsets(definitions):
+    """Merge the graph of synsets having the same root."""
     # Map all synset having the same root.
     mapped = defaultdict(list)
     for definition in definitions:
         mapped[definition['graph'].graph['root']].append(definition)
 
-    # For each list of synsets, merge them all into the first item of a list.
+    # For each list of synsets, merge them all into the first item of the list.
     merged = []
     for defs in mapped.itervalues():
         base = defs[0]
@@ -139,6 +142,35 @@ def _download_nltk_data():
         for datum in data:
             if not exists(join(NLTK_DATA_DIR, directory, datum)):
                 nltk.download(datum, download_dir=NLTK_DATA_DIR)
+
+
+def tree_data(G, root):
+    """Function taken from networkx and modified to allow non-tree graphs.
+    A tree graph is one where the number of nodes is exactly the number
+    of edges + 1:
+
+        G.number_of_nodes() == G.number_of_edges() + 1
+
+    However, WordNet has non-tree graphs and we want to show them.
+    """
+    if not G.is_directed():
+        raise TypeError("G is not directed")
+
+    def add_children(n, G):
+        nbrs = G[n]
+        if len(nbrs) == 0:
+            return []
+        children = []
+        for child in nbrs:
+            d = dict(id=child, **G.node[child])
+            c = add_children(child, G)
+            if c:
+                d['children'] = c
+            children.append(d)
+        return children
+    data = dict(id=root, **G.node[root])
+    data['children'] = add_children(root, G)
+    return data
 
 
 _download_nltk_data()

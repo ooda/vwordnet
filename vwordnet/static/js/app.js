@@ -10,7 +10,8 @@ define([
   "viewmodel",
   "tree",
   "infomsg",
-  "bootstrap"
+  "bootstrap",
+  "kinetic"
 ],
 function ($, _, ko, d3, viewmodel, tree, infomsg) {
   var exports = {}, define, addGraph;
@@ -18,15 +19,12 @@ function ($, _, ko, d3, viewmodel, tree, infomsg) {
   exports.initialize = function () {
     console.log("Initializing app.");
     ko.applyBindings(viewmodel);
+    $("body").kinetic({cursor: 'default', slowdown: 0.7});
   };
 
   viewmodel.define = function (word) {
     define(viewmodel.word());
   };
-
-  $(window).resize(function () {
-
-  });
 
   define = function  (word) {
     // Erase previous entries

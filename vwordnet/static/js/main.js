@@ -4,6 +4,7 @@
 require({
   paths: {
     "jquery": "other/jquery-2.1.0.min",
+    "kinetic": "other/jquery.kinetic.min",
     "knockout": "other/knockout-2.2.1",
     "underscore": "other/underscore-min",
     "domReady": "other/domReady",
@@ -41,6 +42,10 @@ require({
     },
     'bootstrap': {
       exports: 'bootstrap',
+      deps: ['jquery']
+    },
+    'kinetic': {
+      exports: 'kinetic',
       deps: ['jquery']
     }
   }

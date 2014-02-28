@@ -28,7 +28,7 @@
   <div class="row">
     <div class="col-md-12">
       <ul class="nav nav-tabs" data-bind="foreach: definitions">
-        <li><a data-bind="text: rootsynset, attr:{href: '#' + id}"
+        <li><a data-bind="text: rootsynset, attr:{href: '#' + name}"
           data-toggle="tab"></a></li>
       </ul>
     </div>
@@ -38,12 +38,12 @@
     data-bind="foreach: definitions">
 
     <div class="js-definition col-md-12 tab-pane"
-      data-bind="attr: {id: id}">
+      data-bind="attr: {id: name}">
       <span class="rootsynset" data-bind="text: rootsynset"></span>
 
       <div data-bind="foreach: synsets">
         <div class="synset">
-          <span class="synset-id" data-bind="text: id"></span>
+          <span class="synset-id" data-bind="text: name"></span>
           <span class="synset-def" data-bind="text: definition"></span>
         </div>
       </div>

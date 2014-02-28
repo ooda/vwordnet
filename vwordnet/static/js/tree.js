@@ -7,28 +7,36 @@ define([
   "underscore",
   "viewmodel",
   "d3",
-  "knockout"
+  "knockout",
+  "bootstrap"
 ],
 function  ($, _, viewmodel, d3, ko) {
   var exports = {},
-    closeAll, toggle, makeTree, reduce, expand, expandReduce,
+    closeAll, toggle, makeTree, reduce, expand, expandReduce, makeNodeContent,
     moreNodeName = "... more ...";
+
+  // One-time initialization of popovers.
+  $('body').popover({
+    trigger: 'hover',
+    placement: 'auto',
+    container: 'body',
+    selector: 'svg g',
+    html: true
+  });
 
   exports.build = function (options) {
     var that = {},
       defaults = {
         container: null
       },
-      root, tree, diagonal, vis, index,
+      root, tree, diagonal, vis,
       showAll, update,
       opts = _.defaults(options, defaults),
         sizeX = 15, sizeY = 220;
-
+    
     that.draw = function  (rootNode) {
       var width, height,
         m = [20, 20, 20, 120];
-
-      index = 0;
 
       root = rootNode;
       tree = d3.layout.tree().size(null).elementsize([sizeX, sizeY]);
@@ -51,6 +59,11 @@ function  ($, _, viewmodel, d3, ko) {
 
       root.x0 = height / 2;
       root.y0 = 0;
+  
+      // Make-up unique identifiers
+      nodes.forEach(function (d) {
+        d.id = (d.parent ? d.parent.name : "root") + "-" + d.name;
+      });
 
       //reduce(root);
       update(root);
@@ -64,7 +77,7 @@ function  ($, _, viewmodel, d3, ko) {
 
       // Update the nodes…
       var node = vis.selectAll("g.js-node")
-        .data(nodes, function (d) { return d.id || (d.id = ++index); });
+        .data(nodes, function (d) { return d.id; });
 
       // Enter any new nodes at the parent's previous position.
       var nodeEnter = node.enter().append("svg:g")
@@ -74,10 +87,12 @@ function  ($, _, viewmodel, d3, ko) {
         .attr("transform", function (d) {
           return "translate(" + source.y0 + "," + source.x0 + ")";
         })
+        .attr("data-title", function (d) {return d.name; })
+        .attr("data-content", function (d) {return makeNodeContent(d); })
         .on("click", function (d) {
           if (d3.event.ctrlKey) {
-            expandReduce(d, true);
-            update(d);
+            //expandReduce(d, true);
+            //update(d);
           }
           else {
             toggle(d);
@@ -251,6 +266,16 @@ function  ($, _, viewmodel, d3, ko) {
       };
     }
   });
+
+  makeNodeContent = function (node) {
+    var content = node.definition;
+    if (node.lemmas) {
+      content += "<br /><br /><em>";
+      node.lemmas.forEach(function (d) { content += d.name + ", "; });
+      content = content.slice(0, -2) + "</em>";
+    }
+    return content;
+  };
 
   expandReduce = _.toggle(expand, reduce);
 

@@ -50,7 +50,7 @@ function ($, _, ko, d3, viewmodel, tree, infomsg) {
         // Because Bootstrap selects element with jQuery and selectors must
         // escape dots, we need to remove those dots from the ids.
         data.definitions.forEach(function (def) {
-          def.id = def.rootsynset.replace(/\./g, "");
+          def.name = def.rootsynset.replace(/\./g, "");
         });
 
         // Add nodes to the DOM through Knockout

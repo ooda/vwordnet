@@ -41,7 +41,7 @@ def get_definitions(word):
         graph = get_hypernym_graph(synset)
         definition = {
             'synsets': [{
-                'id': synset.name,
+                'name': synset.name,
                 'definition': synset.definition,
                 'lemmas': [lemma_attr(l) for l in synset.lemmas],
             }],
@@ -122,7 +122,7 @@ def synset_data(synset):
 
 def lemma_attr(lemma):
     return {
-        'id': lemma.name,
+        'name': lemma.name,
         'count': lemma.count(),
     }
 
@@ -162,13 +162,13 @@ def tree_data(G, root):
             return []
         children = []
         for child in nbrs:
-            d = dict(id=child, **G.node[child])
+            d = dict(name=child, **G.node[child])
             c = add_children(child, G)
             if c:
                 d['children'] = c
             children.append(d)
         return children
-    data = dict(id=root, **G.node[root])
+    data = dict(name=root, **G.node[root])
     data['children'] = add_children(root, G)
     return data
 

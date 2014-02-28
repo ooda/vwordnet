@@ -11,14 +11,20 @@
 
 
 body {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 400;
     background-color: @background;
+}
+
+h2 {
+    font-weight: 600;
 }
 
 #alertContainer {
   position: fixed;
   top: 30px;
   width: 100%;
-  z-index: -1;
+  z-index: +10;
 }
 
 #jsAlert {
@@ -40,8 +46,8 @@ body {
 }
 
 #define {
-    margin-top: 40px;
     margin-left: 40px;
+    width: 300px;
 }
 
 
@@ -61,7 +67,12 @@ body {
 
 .js-node text {
     fill: @text;
-    font: 12px sans-serif;
+    font-size: 14px;
+    font-family: 'Source Sans Pro', sans-serif;
+}
+
+.js-more-node {
+    cursor: pointer;
 }
 
 .link {
@@ -82,11 +93,11 @@ circle.js-parent {
 }
 
 .rootsynset {
-    font-size: 24px;
+    font-size: 20px;
 }
 
 .synset {
-    font-size: 18px;
+    font-size: 15px;
     margin: 10px 0px 20px 20px;
 }
 
@@ -98,6 +109,11 @@ circle.js-parent {
     content: ':';
 }
 
-#spinner {
-    margin-bottom: 10px;
+.nav {
+    margin-bottom: 20px;
+}
+
+.nav > li > a {
+    padding: 5px 10px;
+    color: #333;
 }

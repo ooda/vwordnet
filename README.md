@@ -7,7 +7,20 @@ lot of WordNet viewers (see this
 app shows the synset hierarchy (hypernyms/hyponyms) as a horizontal tree with
 fixed width levels.
 
-More to come.
+Installation:
+-------------
+sudo apt-get install libffi-dev
+
+virtualenv --no-site-packages env
+source env/bin/activate
+pip install -r requirements.txt
+
+Running the server:
+python runserver.py
+
+Warning:
+--------
+In order to use NLTK 3.0 instead of 2.0, code rewritting will be necessary because item "synsets" have become functions instead of objects.
 
 Licence
 -------

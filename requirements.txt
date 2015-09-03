@@ -2,5 +2,5 @@ flask==0.9
 requests==1.1.0
 gunicorn==0.17.2
 git+https://github.com/ooda/cloudly.git#egg=cloudly
-nltk
+nltk==2.0.4
 networkx

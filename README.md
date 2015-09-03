@@ -20,7 +20,7 @@ python runserver.py
 
 Warning:
 --------
-In order to use NLTK 3.0 instead of 2.0, code rewritting will be necessary because item "synsets" have become functions instead of objects.
+In order to use NLTK 3.0 instead of 2.0, code rewritting will be necessary because item "synsets" have become functions instead of objects. Also note that Heroku latest Stack Cedar-14 used setuptools version 11 which is not comptatible with NLTK 2.0.
 
 Licence
 -------

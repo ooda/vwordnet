@@ -1,7 +1,8 @@
-setuptools==9.1
 flask==0.9
 requests==1.1.0
 gunicorn==0.17.2
 git+https://github.com/ooda/cloudly.git#egg=cloudly
-nltk==2.0.4
+nltk==2.0.5
 networkx
+cffi
+
